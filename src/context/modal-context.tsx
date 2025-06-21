@@ -23,6 +23,7 @@ interface OpenModalAction {
 interface CloseModalAction {
   type: "CLOSE_MODAL";
 }
+
 type Action = OpenModalAction | CloseModalAction;
 // Initial state for the modal
 const initialState: ModalState = {

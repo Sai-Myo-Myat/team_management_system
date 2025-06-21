@@ -7,10 +7,13 @@ import { useModal } from "@/context/modal-context";
 import { useTeams } from "@/api/team-api";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import DeleteComfirmationModal from "@/components/modals/delete-confirmation-modal";
 
 export default function TeamsPage() {
   const { openModal } = useModal();
-  const { getTeamById, getTeams } = useTeams();
+  const { getTeamById, getTeams, removeTeam } = useTeams();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
   const [teams, setTeams] = useState([]);
   const onUpdatePress = useCallback(
     (id: string) => {
@@ -19,6 +22,22 @@ export default function TeamsPage() {
     },
     [openModal, getTeamById]
   );
+
+  const onRemovePress = useCallback((id: string) => {
+    setDialogOpen(true);
+    setIdToDelete(id);
+  }, []);
+
+  const onDeleteConfirm = useCallback(() => {
+    removeTeam(idToDelete);
+    setDialogOpen(false);
+    setIdToDelete("");
+  }, [removeTeam, idToDelete]);
+
+  const onCancelDelete = useCallback(() => {
+    setDialogOpen(false);
+    setIdToDelete("");
+  }, []);
 
   const onCreatePress = useCallback(() => {
     openModal("TEAM_MODAL");
@@ -52,13 +71,23 @@ export default function TeamsPage() {
       </div>
       <DataTable
         columns={columns}
-        meta={{ updateTeam: onUpdatePress } as TeamsTableMeta}
+        meta={
+          {
+            updateTeam: onUpdatePress,
+            removeTeam: onRemovePress,
+          } as TeamsTableMeta
+        }
         data={teams || []}
         initialState={{
           columnVisibility: {
             id: false,
           },
         }}
+      />
+      <DeleteComfirmationModal
+        open={dialogOpen}
+        onCancel={onCancelDelete}
+        onDelete={onDeleteConfirm}
       />
     </div>
   );

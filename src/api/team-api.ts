@@ -65,5 +65,16 @@ export const useTeams = () => {
     };
   };
 
-  return { getTeams, getTeamById, createTeam, updateTeam };
+  const removeTeam = (id: string): ApiResponse<Team[]> => {
+    let teams = getTeams();
+    teams = teams.filter((team: Team) => team.id !== id);
+    saveTeams(teams);
+    return {
+      data: teams,
+      status: "success",
+      error: undefined,
+    };
+  };
+
+  return { getTeams, getTeamById, createTeam, updateTeam, removeTeam };
 };

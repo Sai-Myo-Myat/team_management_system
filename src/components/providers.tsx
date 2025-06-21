@@ -10,7 +10,8 @@ const Providers = ({ children }: PropsWithChildren) => {
     <div>
       <AuthProvider>
         <ModalProvider>
-          {children} <ModalManager />
+          {children}
+          <ModalManager />
         </ModalProvider>
       </AuthProvider>
     </div>
