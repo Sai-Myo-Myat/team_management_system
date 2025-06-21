@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useTeams } from "@/api/team-api";
 import { Team } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import NumberInput from "../number-input";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Team name is required" }),
@@ -84,7 +85,7 @@ const TeamForm = () => {
             <FormItem>
               <FormLabel>Player Count</FormLabel>
               <FormControl>
-                <Input
+                <NumberInput
                   type="number"
                   {...field}
                   placeholder="Enter player count"
