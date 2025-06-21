@@ -34,8 +34,13 @@ const DeleteComfirmationModal: React.FC<Props> = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive" onClick={onDelete}>
+            <AlertDialogCancel className="cursor-pointer" onClick={onCancel}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive cursor-progress"
+              onClick={onDelete}
+            >
               Confirm
             </AlertDialogAction>
           </AlertDialogFooter>

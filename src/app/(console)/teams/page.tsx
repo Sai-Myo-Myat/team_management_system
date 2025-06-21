@@ -12,9 +12,8 @@ import DeleteComfirmationModal from "@/components/modals/delete-confirmation-mod
 export default function TeamsPage() {
   const { openModal } = useModal();
   const { getTeamById, getTeams, removeTeam } = useTeams();
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState(getTeams() || []);
   const onUpdatePress = useCallback(
     (id: string) => {
       const teamToUpdate = getTeamById(id);
@@ -24,18 +23,15 @@ export default function TeamsPage() {
   );
 
   const onRemovePress = useCallback((id: string) => {
-    setDialogOpen(true);
     setIdToDelete(id);
   }, []);
 
   const onDeleteConfirm = useCallback(() => {
     removeTeam(idToDelete);
-    setDialogOpen(false);
     setIdToDelete("");
   }, [removeTeam, idToDelete]);
 
   const onCancelDelete = useCallback(() => {
-    setDialogOpen(false);
     setIdToDelete("");
   }, []);
 
@@ -43,15 +39,7 @@ export default function TeamsPage() {
     openModal("TEAM_MODAL");
   }, [openModal]);
 
-  // Initial load of teams
-  useEffect(() => {
-    if (!teams.length) {
-      const initialTeams = getTeams();
-      setTeams(initialTeams);
-    }
-  }, [getTeams, teams.length]);
-
-  // Listen for updates to teams
+  // // Listen for updates to teams
   useEffect(() => {
     const handleTeamsUpdated = () => {
       setTeams(getTeams());
@@ -85,7 +73,7 @@ export default function TeamsPage() {
         }}
       />
       <DeleteComfirmationModal
-        open={dialogOpen}
+        open={!!idToDelete}
         onCancel={onCancelDelete}
         onDelete={onDeleteConfirm}
       />
