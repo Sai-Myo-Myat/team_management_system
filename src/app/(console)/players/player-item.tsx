@@ -1,4 +1,4 @@
-// create PlayerItem component with assign and remove to teams buttons. Only show assign button if player is not in a team. On click of assign button, show a dropdown menu with a list of teams to select from. On click of remove button, remove player from team.
+"use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -12,11 +12,13 @@ import { useTeams } from "@/api/team-api";
 import { Player, Team } from "@/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { playersKeys } from "@/api/query-keys/players-keys";
+import { useRouter } from "next/navigation";
 
 interface PlayerItemProps {
   player: Player;
 }
 export default function PlayerItem({ player }: PlayerItemProps) {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { getTeams, assignPlayerToTeam, removePlayerFromTeam } = useTeams();
   const queryClient = useQueryClient();
@@ -25,6 +27,7 @@ export default function PlayerItem({ player }: PlayerItemProps) {
     assignPlayerToTeam(teamId, player);
     setIsModalOpen(false);
     queryClient.invalidateQueries({ queryKey: playersKeys.list() });
+    router.push(`/teams/${teamId}`);
   };
 
   const handlerRemovePlayer = () => {

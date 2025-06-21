@@ -8,12 +8,10 @@ interface Props {
   id: string;
 }
 const TeamDetailView: React.FC<Props> = ({ id }) => {
-  console.log("Team Detail View Props", id);
   const { getTeamById } = useTeams();
   const [team, setTeam] = useState<Team | null>(null);
 
   useEffect(() => {
-    console.log("Team Detail View Mounted", team);
     if (!team) {
       const teamFromStorage = getTeamById(id);
       setTeam(teamFromStorage);

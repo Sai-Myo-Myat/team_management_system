@@ -22,7 +22,7 @@ const Get = async (req: Request) => {
   } catch (error) {
     console.error("Error fetching players:", error);
     return NextResponse.json(
-      { error: "Failed to fetch players" },
+      { error: "Failed to fetch players!" },
       { status: 500 }
     );
   }
