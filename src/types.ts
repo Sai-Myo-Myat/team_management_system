@@ -22,5 +22,5 @@ export interface ApiResponse<T> {
 }
 
 export interface PageProps {
-  params: Promise<Record<string, any>>;
+  params: Promise<Record<string, unknown>>;
 }
