@@ -48,7 +48,7 @@ const LoginForm = () => {
 
   return (
     <Box>
-      <h1 className="text-center font-bold text-2xl">Login</h1>
+      <h1 className="text-center font-bold text-2xl">Login Form</h1>
       <Form {...form}>
         <form method="POST" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -69,7 +69,7 @@ const LoginForm = () => {
             )}
           />
           <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
-            Sign In
+            Log In
           </Button>
         </form>
       </Form>
