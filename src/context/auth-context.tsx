@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface User {
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
@@ -25,8 +27,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (token) {
       setIsAuthenticated(true);
       setUser({ username: token }); // should descrypt token to get actual user data
+    } else {
+      router.replace("/login");
     }
-  }, []);
+  }, [router]);
 
   const login = (username: string) => {
     localStorage.setItem("token", username); // should enctrypt the token in a real application
