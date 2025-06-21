@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   TableMeta,
   useReactTable,
+  InitialTableState,
 } from "@tanstack/react-table";
 
 import {
@@ -21,17 +22,20 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   meta?: TableMeta<TData>;
+  initialState?: InitialTableState;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   meta,
+  initialState
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     columns,
     data,
     meta,
+    initialState,
     getCoreRowModel: getCoreRowModel(),
   });
 
