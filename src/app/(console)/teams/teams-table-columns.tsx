@@ -4,14 +4,7 @@ import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionColumn from "@/components/table-actions-column";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-
-export type Team = {
-  id: string;
-  name: string;
-  player_count: number;
-  region: string;
-  country: string;
-};
+import { Team } from "@/types";
 
 export type TeamsTableMeta = {
   updateTeam: (id: string) => void;

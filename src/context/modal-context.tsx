@@ -1,22 +1,23 @@
 // let implement a context for managing modal state in a React application with useReducer. Open a modal with a specific type and close it.
 
+import { Team } from "@/types";
 import React, { createContext, useReducer, ReactNode } from "react";
 
 // Define the types of modals
-type ModalType = "UPDATE_TEAM" | "CREATE_TEAM";
+type ModalType = "TEAM_MODAL";
 
 // Define the state structure for the modal
 interface ModalState {
   isOpen: boolean;
   type: ModalType | null;
-  data?: any; // Optional data to pass to the modal
+  data?: Team; // Optional data to pass to the modal
 }
 // Define the actions for the reducer
 interface OpenModalAction {
   type: "OPEN_MODAL";
   payload: {
     modalType: ModalType;
-    data?: any; // Optional data to pass to the modal
+    data?: Team; // Optional data to pass to the modal
   };
 }
 interface CloseModalAction {
@@ -52,7 +53,7 @@ const modalReducer = (state: ModalState, action: Action): ModalState => {
 // Create the context
 interface ModalContextProps {
   state: ModalState;
-  openModal: (modalType: ModalType, data?: any) => void;
+  openModal: (modalType: ModalType, data?: Team) => void;
   closeModal: () => void;
 }
 export const ModalContext = createContext<ModalContextProps | undefined>(
@@ -65,7 +66,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [state, dispatch] = useReducer(modalReducer, initialState);
 
-  const openModal = (modalType: ModalType, data?: any) => {
+  const openModal = (modalType: ModalType, data?: Team) => {
     dispatch({
       type: "OPEN_MODAL",
       payload: { modalType, data },
