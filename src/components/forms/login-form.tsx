@@ -13,7 +13,7 @@ import { useAuth } from "@/context/auth-context";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import Box from "./box";
+import Box from "../box";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
