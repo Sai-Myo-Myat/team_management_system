@@ -47,10 +47,10 @@ export default function PlayerItem({ player }: PlayerItemProps) {
       {player.team_id ? (
         <Button
           variant="destructive"
-          className="cursor-pointer"
+          className="cursor-pointer text-xs"
           onClick={handlerRemovePlayer}
         >
-          Remove
+          Remove from Team
         </Button>
       ) : (
         <DropdownMenu open={isModalOpen} onOpenChange={setIsModalOpen}>
