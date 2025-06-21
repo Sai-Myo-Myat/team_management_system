@@ -1,13 +1,31 @@
+"use client";
+
 import { DataTable } from "@/components/data-table";
-import React from "react";
-import { columns } from "./teams-table-columns";
+import React, { useCallback } from "react";
+import { columns, TeamsTableMeta } from "./teams-table-columns";
+import { useModal } from "@/context/modal-context";
 
 export default function TeamsPage() {
+  const { openModal } = useModal();
+  const onUpdatePress = useCallback(
+    (id: string) => {
+      openModal("UPDATE_TEAM", {
+        teamId: id,
+        teamName: "Team One",
+        country: "Thailand",
+        region: "Asia",
+        playerCount: 5,
+      });
+    },
+    [openModal]
+  );
+
   return (
     <div>
       <h1>Teams</h1>
       <DataTable
         columns={columns}
+        meta={{ updateTeam: onUpdatePress } as TeamsTableMeta}
         data={[
           {
             id: "1",
