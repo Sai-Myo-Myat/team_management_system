@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 
 import { BalldontlieAPI } from "@balldontlie/sdk";
 
-const api = new BalldontlieAPI({ apiKey: process.env.BALLDONTLIE_API_KEY });
+const apiKey = process.env.BALLDONTLIE_API_KEY;
+if (!apiKey) {
+  throw new Error("BALLDONTLIE_API_KEY environment variable is not set");
+}
+const api = new BalldontlieAPI({ apiKey });
 
 const Get = async (req: Request) => {
   console.log("Received request to fetch players");

@@ -9,8 +9,11 @@ const checkDuplicateTeam = (teams: Team[], newTeam: Team): boolean => {
 
 // read teams from local storate
 export const useTeams = () => {
+  if (typeof window === "undefined") {
+    throw new Error("useTeams must be used in a browser environment");
+  }
   const getTeams = () => {
-    const teams = window.localStorage.getItem("teams");
+    const teams = localStorage.getItem("teams");
     return teams ? JSON.parse(teams) : [];
   };
 
