@@ -18,6 +18,7 @@ import { useTeams } from "@/api/team-api";
 import { Team } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import NumberInput from "../number-input";
+import { X } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Team name is required" }),
@@ -51,9 +52,23 @@ const TeamForm = () => {
 
   const onSubmit = (data: FormValues) => {
     if (!!state.data) {
-      teams.updateTeam(state.data.id, data as Team);
+      const response = teams.updateTeam(state.data.id, data as Team);
+      if (response.error) {
+        form.setError("root", {
+          type: "manual",
+          message: response.error,
+        });
+        return;
+      }
     } else {
-      teams.createTeam({ id: uuidv4(), ...data } as Team);
+      const response = teams.createTeam({ id: uuidv4(), ...data } as Team);
+      if (response.error) {
+        form.setError("root", {
+          type: "manual",
+          message: response.error,
+        });
+        return;
+      }
     }
     closeModal();
     router.refresh();
@@ -61,6 +76,11 @@ const TeamForm = () => {
 
   return (
     <Form {...form}>
+      {form.formState.errors.root && (
+        <div className="flex gap-2 items-center text-destructive bg-accent px-4 py-2 rounded text-sm font-semibold">
+          <X size={14} /> {form.formState.errors.root.message}
+        </div>
+      )}
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4"

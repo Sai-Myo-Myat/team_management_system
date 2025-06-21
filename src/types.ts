@@ -5,3 +5,9 @@ export type Team = {
   region: string;
   country: string;
 };
+
+export interface ApiResponse<T> {
+  data: T;
+  error?: string;
+  status: "success" | "error";
+}
