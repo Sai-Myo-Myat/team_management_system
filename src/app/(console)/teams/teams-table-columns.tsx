@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import ActionColumn from "@/components/table-actions-column";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Team } from "@/types";
+import Link from "next/link";
 
 export type TeamsTableMeta = {
   updateTeam: (id: string) => void;
@@ -19,6 +20,14 @@ export const columns: ColumnDef<Team>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ row }) => (
+      <Link
+        href={`/teams/${row.getValue("id")}`}
+        className="font-semibold text-primary hover:underline"
+      >
+        {row.getValue("name")}
+      </Link>
+    ),
   },
   {
     accessorKey: "player_count",

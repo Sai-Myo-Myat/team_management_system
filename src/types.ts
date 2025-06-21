@@ -20,3 +20,7 @@ export interface ApiResponse<T> {
   error?: string;
   status: "success" | "error";
 }
+
+export interface PageProps {
+  params: Promise<Record<string, any>>;
+}
